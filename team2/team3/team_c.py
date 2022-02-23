@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from team-2.team-3.tes3 import Dummy
+from team2.team3.tes3 import Dummy
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.dummy import DummyOperator
