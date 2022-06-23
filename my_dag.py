@@ -1,11 +1,10 @@
 from datetime import datetime, timedelta
-from tes import Dummy
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.dummy import DummyOperator
 
 with DAG(
-    dag_id='example_bash_operator',
+    dag_id='celery_kubernetes_demo',
     schedule_interval='0 0 * * *',
     start_date=datetime(2021, 1, 1),
     catchup=False,
@@ -15,6 +14,7 @@ with DAG(
 ) as dag:
     run_this_last = DummyOperator(
         task_id='run_this_last',
+        
     )
 
     # [START howto_operator_bash]
@@ -30,6 +30,7 @@ with DAG(
         task = BashOperator(
             task_id='runme_' + str(i),
             bash_command='echo "{{ task_instance_key_str }}" && sleep 1',
+            queue = 'kubernetes'
         )
         task >> run_this
 
